@@ -6,11 +6,17 @@ from percentage import calculate_presence_percentage
 from teacher import add_teacher, remove_teacher
 from salary import calculate_salary
 
+# v1.2 update added features
+from timetable import add_or_update_timetable
+from view_teacher import view_teacher_information
+from modify_teacher import modify_teacher_information
+from backup_data import backup_data
+
 def connect_to_database():
     return mysql.connector.connect(
         host="localhost",
         user="prakhardoneria",
-        password="kise_ko_batana_mt",
+        password="kise ko batana mat",
         database="school_management"
     )
 
@@ -23,7 +29,11 @@ def display_menu():
     print("5. Add Teacher")
     print("6. Remove Teacher")
     print("7. Calculate Salary")
-    print("8. Exit")
+    print("8. Add/Update Time Table")
+    print("9. View Teacher Information")
+    print("10. Modify Teacher Information")
+    print("11. Backup Data")
+    print("12. Exit")
 
 def main():
     db_connection = connect_to_database()
@@ -31,7 +41,7 @@ def main():
 
     while True:
         display_menu()
-        choice = input("Enter your choice (1-8): ")
+        choice = input("Enter your choice (1-12): ")
 
         if choice == "1":
             substitute_teacher(2, 1)
@@ -55,11 +65,21 @@ def main():
             teacher_id = input("Enter Teacher ID: ")
             calculate_salary(teacher_id)
         elif choice == "8":
+            add_or_update_timetable()
+        elif choice == "9":
+            teacher_id = input("Enter Teacher ID: ")
+            view_teacher_information(teacher_id)
+        elif choice == "10":
+            teacher_id = input("Enter Teacher ID to Modify: ")
+            modify_teacher_information(teacher_id)
+        elif choice == "11":
+            backup_data()
+        elif choice == "12":
             break
         else:
-            print("Invalid choice. Please enter a number between 1 and 8.")
+            print("Invalid choice. Please enter a number between 1 and 12.")
 
-    # Code to Commit changes and close connection : ©Prakhar Doneria 2024
+    # Commit changes and close connection
     db_connection.commit()
     cursor.close()
     db_connection.close()
